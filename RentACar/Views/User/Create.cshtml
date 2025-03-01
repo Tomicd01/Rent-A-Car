@@ -1,0 +1,166 @@
+﻿@model RentACar.ViewModels.User.UserViewModel
+
+@{
+	ViewData["IsUserPage"] = true;
+}
+
+<body class="user-page">
+	<!--
+	<div class="background">
+		<i class="bi bi-plus-lg large-icon"></i>
+	</div> -->
+
+	<div class="form-container">
+		<h2>Kreiranje korisnika</h2>
+		<form asp-action="Create" method="post">
+			<div class="form-group">
+				<label asp-for="FirstName" class="form-label">Ime</label>
+				<input asp-for="FirstName" name="FirstName" id="FirstName" type="text" class="form-control" />
+				<small class="form-text text-muted">Ime je obavezno. Mora da ima izmedju 2 i 50 karaktera.</small>
+				<span asp-validation-for="FirstName" class="text-danger"></span>
+			</div>
+
+			<div class="form-group">
+				<label asp-for="LastName" class="form-label">Prezime</label>
+				<input asp-for="LastName" name="LastName" id="LastName" type="text" class="form-control" />
+				<small class="form-text text-muted">Prezime je obavezno. Mora da ima izmedju 2 i 50 karaktera.</small>
+				<span asp-validation-for="LastName" class="text-danger"></span>
+			</div>
+
+			<div class="form-group">
+				<label asp-for="Email" class="form-label"></label>
+				<input asp-for="Email" name="Email" id="Email" type="email" class="form-control" />
+				<small class="form-text text-muted">Email je obavezan.</small>
+				<span asp-validation-for="Email" class="text-danger"></span>
+			</div>
+
+			<div class="form-group">
+				<label asp-for="PhoneNumber" class="form-label">Broj telefona</label>
+				<input asp-for="PhoneNumber" name="PhoneNumber" id="PhoneNumber" type="tel" class="form-control" />
+				<small class="form-text text-muted">Broj je obavezan. Mora da ima izmedju 8 i 15 cifara.</small>
+				<span asp-validation-for="PhoneNumber" class="text-danger"></span>
+			</div>
+
+			<div class="form-group">
+				<label asp-for="Address" class="form-label">Adresa</label>
+				<input asp-for="Address" name="Address" id="Address" type="text" class="form-control" />
+				<small class="form-text text-muted">Adresa je obavezna.Mora da ima do 100 karaktera.</small>
+				<span asp-validation-for="Address" class="text-danger"></span>
+			</div>
+
+			<div class="form-group">
+				<label asp-for="Username" class="form-label">Korisnicko ime</label>
+				<input asp-for="Username" name="Username" id="Username" type="text" class="form-control" />
+			</div>
+
+			<div class="form-group">
+				<label asp-for="PasswordHash" class="form-label">Lozinka</label>
+				<input asp-for="PasswordHash" name="PasswordHash" id="PasswordHash" type="password" class="form-control" />
+				<small class="form-text text-muted">Lozinka je obavezna. Mora da ima bar 1 specijalan karakter (!?/|#) i bar 1 veliko slovo.</small>
+				<span asp-validation-for="PasswordHash" class="text-danger"></span>
+			</div>
+
+			<div class="form-group">
+				<label asp-for="ConfirmPasswordHash" class="form-label">Potvrdi lozinku</label>
+				<input asp-for="ConfirmPasswordHash" name="ConfirmPasswordHash" id="ConfirmPasswordHash" type="password" class="form-control" />
+				<small class="form-text text-muted">Obavezna potvrda lozinke.</small>
+				<span asp-validation-for="ConfirmPasswordHash" class="text-danger"></span>
+			</div>
+
+			<button type="submit" class="btn btn-primary mt-1">Kreiraj</button>
+
+		</form>
+	</div>
+	
+</body>
+
+
+@section Scripts {
+	<script>
+		$(document).ready(function (){
+			$("form").validate(				
+			{
+				rules: {
+					FirstName: {
+						required: true,
+						minlength: 2,
+						maxlength: 50
+					},
+					LastName: {
+						required: true,
+						minlength: 2,
+						maxlength: 50
+					},
+					Email: {
+						required: true,
+						email: true,
+					},
+					PhoneNumber: {
+						required: true,
+						pattern: /^(\+381|0)[6-9][0-9]{7,8}$/,
+						minlength: 8,
+						maxlength: 15
+					},
+					Address: {
+						required: true,
+						minlength: 5,
+						maxlength: 100
+					},
+					PasswordHash: {
+						required: true,
+						minlength: 6,
+						maxlength: 45
+					},
+					ConfirmPasswordHash: {
+						required: true,
+						equalTo: "#PasswordHash",
+						maxlength: 45
+					}
+				},
+
+				messages: {
+					FirstName: {
+						required: "Ime je obavezno.",
+						minlength: "Ime mora imati najmanje 2 karaktera.",
+						maxlength: "Ime ne može imati više od 50 karaktera."
+					},
+					LastName: {
+						required: "Prezime je obavezno.",
+						minlength: "Prezime mora imati najmanje 2 karaktera.",
+						maxlength: "Prezime ne može imati više od 50 karaktera."
+					},
+					Email: {
+						required: "Email je obavezan.",
+						email: "Unesite validan email.",
+					},
+					PhoneNumber: {
+						required: "Telefon je obavezan.",
+						pattern: "Unesite ispravan broj telefona (npr. +381641234567 ili 0641234567).",
+						minlength: "Telefon ne može imati manje od 8 karaktera.",
+						maxlength: "Telefon ne može imati više od 15 karaktera."
+					},
+					Address: {
+						required: "Adresa je obavezna.",
+						minlength: "Adresa mora imati najmanje 5 karaktera.",
+						maxlength: "Adresa ne može imati više od 100 karaktera."
+					},
+					PasswordHash: {
+						required: "Lozinka je obavezna.",
+						minlength: "Lozinka mora imati najmanje 6 karaktera.",
+						maxlength: "Lozinka ne može imati više od 45 karaktera."
+					},
+					ConfirmPasswordHash: {
+						required: "Morate potvrditi lozinku.",
+						equalTo: "Lozinke se ne podudaraju.",
+						maxlength: "Lozinka ne može imati više od 45 karaktera."
+					}
+				},
+				ignore: ":hidden, [name=__RequestVerificationToken]",
+				errorClass: "text-danger",
+				validClass: "is-valid",
+				errorElement: "span"
+			});
+		});
+	</script>
+}
+

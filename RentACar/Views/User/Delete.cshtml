@@ -1,0 +1,11 @@
+﻿@model RentACar.Models.User
+
+<h2>Brisanje korsinika</h2>
+
+<p>Da li ste sigurni da zelite da obrisete korisnika? <strong>@Model.FirstName @Model.LastName</strong></p>
+
+<form asp-action="DeleteConfirmed" method="post">
+	<input type="hidden" name="id" asp-for="@Model.UserId" />
+	<button type="submit" class="btn btn-danger">Da</button>
+	<a asp-action="ShowAllUsers" class="btn btn-secondary">Ne</a>
+</form>

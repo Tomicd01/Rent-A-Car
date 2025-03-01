@@ -1,0 +1,47 @@
+﻿@model List<RentACar.Models.Car>
+
+<h1>najpopularniji automobili 90-ih</h1>
+
+<table class="table table-striped">
+	<thead>
+		<tr>
+			<th>Car Id</th>
+			<th>Make</th>
+			<th>Model</th>
+			<th>Year</th>
+			<th>Price per day</th>
+			<th>Availability</th>
+			<th>Fuel</th>
+			<th>Transmission</th>
+			<th>Drive</th>
+			<th>Type</th>
+			<th>Color</th>
+			<th>Seats</th>
+			<th>Mileage</th>
+			<th>VIN</th>
+			<th>License Plate</th>
+		</tr>
+	</thead>
+	<tbody>
+		@foreach (Car singleCar in Model)
+		{
+			<tr>
+				<td>@singleCar.CarId</td>
+				<td>@singleCar.Make</td>
+				<td>@singleCar.Model</td>
+				<td>@singleCar.Year</td>
+				<td>@singleCar.PricePerDay</td>
+				<td>@singleCar.isAvailable</td>
+				<td>@singleCar.Fuel</td>
+				<td>@singleCar.Transmission</td>
+				<td>@singleCar.Drive</td>
+				<td>@singleCar.Type</td>
+				<td>@singleCar.Color</td>
+				<td>@singleCar.Seats</td>
+				<td>@singleCar.Mileage</td>
+				<td>@singleCar.VIN</td>
+				<td>@singleCar.LicensePlate</td>
+			</tr>
+		}
+	</tbody>
+</table>

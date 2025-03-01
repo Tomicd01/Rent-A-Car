@@ -1,0 +1,138 @@
+﻿@model RentACar.Models.Car
+@using System.ComponentModel.DataAnnotations
+
+<h1>Dodaj novi automobil</h1>
+
+<form asp-action="Create" method="post" enctype="multipart/form-data">
+	<div class="form-group">
+		<label asp-for="Make" class="form-label">Proizvodjac</label>
+		<select asp-for="Make" class="form-control" asp-items="Html.GetEnumSelectList<RentACar.Models.Car.CarMake>()">
+			<option selected disabled value=""> -- Odaberite Marku --</option>
+		</select>
+		<span asp-validation-for="Make" class="text-danger"></span>
+	</div>
+
+	<div class="form-group">
+		<label asp-for="Model" class="form-label">Model</label>
+		<input asp-for="Model" type="text" class="form-control" />
+		<span asp-validation-for="Model" class="text-danger"></span>
+	</div>
+
+	<div class="form-group">
+		<label asp-for="Year" class="form-label">Godina proizvodnje</label>
+		<input asp-for="Year" type="number" class="form-control" />
+		<span asp-validation-for="Year" class="text-danger"></span>
+	</div>
+
+	<div class="form-group">
+		<label asp-for="PricePerDay" class="form-label">Cena po danu</label>
+		<input asp-for="PricePerDay" type="number" class="form-control" step="0.01" />
+		<span asp-validation-for="PricePerDay" class="text-danger"></span>
+	</div>
+
+
+	<div class="form-group">
+		<label asp-for="Fuel" class="form-label">Gorivo</label>
+		<select asp-for="Fuel" asp-items="Html.GetEnumSelectList<RentACar.Models.Car.FuelType>()" class="form-control">
+			<option value="" selected disabled> -- Odaberite gorivo -- </option>
+		</select>
+		<span asp-validation-for="Fuel" class="text-danger"></span>
+	</div>
+
+	<div class="form-group">
+		<label asp-for="Transmission" class="form-label">Menjac</label>
+			@foreach (var transmission in Enum.GetValues(typeof(RentACar.Models.Car.TransmissionType))){
+				var displayAttribute = transmission.GetType()
+			.GetField(transmission.ToString())
+				.GetCustomAttributes(typeof(DisplayAttribute), false)
+				.FirstOrDefault() as DisplayAttribute;
+
+				var displayName = displayAttribute != null ? displayAttribute.Name : transmission.ToString();
+				<div class="form-check">
+					<input type="radio" name="Transmission" value="@transmission" class="form-check-input" id="transmission_@transmission" />
+					<label class="form-check-label" for="transmission_@transmission">@displayName</label>
+				</div>
+
+			}
+		<span asp-validation-for="Transmission" class="text-danger"></span>
+	</div>
+
+	<div class="form-group">
+		<label asp-for="Drive" class="form-label">Pogon</label>
+		@foreach (var drive in Enum.GetValues(typeof(RentACar.Models.Car.DriveType)))
+		{
+			var displayAttribute = drive.GetType()
+			.GetField(drive.ToString())
+			.GetCustomAttributes(typeof(DisplayAttribute), false)
+			.FirstOrDefault() as DisplayAttribute;
+
+			var displayName = displayAttribute != null ? displayAttribute.Name : drive.ToString();
+			<div class="form-check">
+				<input type="radio" name="Drive" value="@drive" class="form-check-input" id="drive_@drive" />
+				<label class="form-check-label" for="drive_@drive">@displayName</label>
+			</div>
+
+		}
+		<span asp-validation-for="Drive" class="text-danger"></span>
+	</div>
+
+	<div class="form-group">
+		<label asp-for="Type" class="form-label">Karoserija</label>
+		<select asp-for="Type" class="form-control" asp-items="Html.GetEnumSelectList<RentACar.Models.Car.CarType>()">
+			<option value="" selected disabled> -- Odaberite karoseriju -- </option>
+		</select>
+		<span asp-validation-for="Type" class="text-danger"></span>
+	</div>
+
+	<div class="form-group">
+		<label asp-for="Color" class="form-label">Boja</label>
+		<select asp-for="Color" class="form-control" asp-items="Html.GetEnumSelectList<RentACar.Models.Car.ColorType>()">
+			<option value="" selected disabled> -- Odaberite boju -- </option>
+		</select>
+		<span asp-validation-for="Color" class="text-danger"></span>
+	</div>
+
+	<div class="form-group">
+		<label asp-for="Seats" class="form-label">Broj sedista</label>
+		<select asp-for="Seats" class="form-control" asp-items="Html.GetEnumSelectList<RentACar.Models.Car.NumberSeats>()">
+			<option value="" selected disabled> -- Odaberite broj sedista -- </option>
+		</select>
+		<span asp-validation-for="Seats" class="text-danger"></span>
+	</div>
+
+	<div class="form-group">
+		<label asp-for="Mileage" class="form-label">Kilometraza</label>
+		<input asp-for="Mileage" type="number" class="form-control" />
+		<span asp-validation-for="Mileage" class="text-danger"></span>
+	</div>
+
+	<div class="form-group">
+		<label asp-for="LicensePlate" class="form-label">Broj tablice</label>
+		<input asp-for="LicensePlate" type="text" class="form-control" />
+		<span asp-validation-for="LicensePlate" class="text-danger"></span>
+	</div>
+
+	<div class="form-group">
+		<label asp-for="VIN" class="form-label">Identifikacioni broj vozila</label>
+		<input asp-for="VIN" type="text" class="form-control" />
+		<span asp-validation-for="VIN" class="text-danger"></span>
+	</div>
+
+	<div class="form-group">
+		<label asp-for="ImageUrl" class="form-label">Dodajte sliku</label>
+		<input asp-for="ImageUrl" type="file" name="file" class="form-control" />
+		<span asp-validation-for="ImageUrl" class="text-danger"></span>
+	</div>
+
+	<div class="form-group">
+		<div class="form-check">
+			<input asp-for="isAvailable" type="checkbox" class="form-check-input" />
+			<label asp-for="isAvailable" class="form-label">Da li je vozilo dostupno?</label>
+		</div>
+	</div>
+
+	<button type="submit" class="btn btn-primary">Kreiraj Automobil</button>
+	<a asp-action="ShowAllCars" class=" btn btn-secondary">Otkazi</a>
+</form>
+
+<div asp-validation-summary="ModelOnly"></div>
