@@ -104,18 +104,26 @@
 			</div>
 		}
 	</div>
-	<input type="hidden" name="pageCount" id="pageCount" value="@Context.Request.Query["pageCount"]" />
 		if(Model.HasPreviousPage)
 		{
 			<a class="btn btn-secondary" href="@Url.Action("Index", "User", new { page = (Model.CurrentPage - 1).ToString() })">Previous</a>
 		}
-	<input type="hidden" name="pageSize" id="pageSize" value="@Context.Request.Query["pageSize"]" />
+
 		if (Model.HasNextPage)
 		{
 		<a class="btn btn-primary" href="@Url.Action("Index", "User", new { page = (Model.CurrentPage + 1).ToString() })">Next</a>
-		}
+		}                                                
 	<div>
-		
+		<hr />
+		@for(int i = 1; i <= Model.TotalPages; i++){
+
+			@if(Model.CurrentPage == i){
+				<a href="javavscript:void(0)" class="disabled-link">@i</a>
+			}else{
+				<a href="@Url.Action("Index", "User", new { page = i })">@i</a>
+			}
+
+		}
 	</div>
 }
 else
@@ -129,6 +137,11 @@ else
 		padding: 15px;
 		margin: 10px 0;
 		background-color: #f9f9f9;
+	}
+	.disabled-link{
+		cursor: default;
+		color: gray;
+		text-decoration: none;
 	}
 </style>
 
